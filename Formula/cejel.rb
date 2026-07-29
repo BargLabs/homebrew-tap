@@ -1,30 +1,30 @@
 class Cejel < Formula
   desc "Offline engineering-trust certificate for codebases"
   homepage "https://cejel.dev"
-  version "0.2.0"
+  version "0.2.2"
   license "AGPL-3.0-only"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/BargLabs/cejel/releases/download/v0.2.0/cejel-Darwin-arm64",
+      url "https://github.com/BargLabs/cejel/releases/download/v0.2.2/cejel-Darwin-arm64",
           using: :nounzip
-      sha256 "6ce4259cd142d6171f3a937d979de93ff81308543f5279572666c0e136f88d06"
+      sha256 "130a2e79b316aeefb99a3b787270fd2dcfeab896e7def6d53402a5202f8f54cf"
     else
-      url "https://github.com/BargLabs/cejel/releases/download/v0.2.0/cejel-Darwin-x86_64",
+      url "https://github.com/BargLabs/cejel/releases/download/v0.2.2/cejel-Darwin-x86_64",
           using: :nounzip
-      sha256 "abfefcff56e9765d26eeeba4fe3bc27cea5a81a3ce6c16ae652d8d93e38d7043"
+      sha256 "3fd207815d7358e89d43c2003ed9400a834bbac8d861ba6ebe8b69fd05526b09"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
-      url "https://github.com/BargLabs/cejel/releases/download/v0.2.0/cejel-Linux-aarch64",
+      url "https://github.com/BargLabs/cejel/releases/download/v0.2.2/cejel-Linux-aarch64",
           using: :nounzip
-      sha256 "20f0992fd074025cfe0737f4083a38598c27c963a81f40ff3e84e11adf278c60"
+      sha256 "be291ab013e9e2eee4bb0041c91bb7e21564275714812331ecbf92a67593ae02"
     else
-      url "https://github.com/BargLabs/cejel/releases/download/v0.2.0/cejel-Linux-x86_64",
+      url "https://github.com/BargLabs/cejel/releases/download/v0.2.2/cejel-Linux-x86_64",
           using: :nounzip
-      sha256 "4cbed580ccf7f033426659fbf418cb55eee213c64ffa9f639ce122a493e10d88"
+      sha256 "5243678332deeb463bbab94716455142710a7b597e084503bfa4de6c48345d06"
     end
   end
 
