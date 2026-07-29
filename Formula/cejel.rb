@@ -1,7 +1,6 @@
 class Cejel < Formula
   desc "Offline engineering-trust certificate for codebases"
   homepage "https://cejel.dev"
-  version "0.2.2"
   license "AGPL-3.0-only"
 
   on_macos do
