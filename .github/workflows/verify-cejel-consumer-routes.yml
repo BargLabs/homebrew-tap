@@ -29,13 +29,21 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Require the unpinned package through pnpm
+      - name: Observe the unpinned package through pnpm
         run: |
           client_output="$(npx --yes pnpm@11.21.0 dlx @cejel/cejel --version)"
           printf '%s\n' "$client_output"
           actual_version="$(printf '%s\n' "$client_output" | tail -n 1)"
+          test -n "$actual_version"
+          echo "Cejel unpinned pnpm consumer runtime version under pnpm's release-age policy: $actual_version"
+
+      - name: Require the pinned package through pnpm
+        run: |
+          client_output="$(npx --yes pnpm@11.21.0 dlx @cejel/cejel@0.4.0 --version)"
+          printf '%s\n' "$client_output"
+          actual_version="$(printf '%s\n' "$client_output" | tail -n 1)"
           test "$actual_version" = "$EXPECTED_VERSION"
-          echo "Cejel unpinned pnpm consumer runtime version: $actual_version"
+          echo "Cejel pinned pnpm consumer runtime version: $actual_version"
 
       - name: Set up Bun
         uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
