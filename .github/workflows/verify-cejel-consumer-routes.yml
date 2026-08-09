@@ -31,7 +31,9 @@ jobs:
 
       - name: Require the unpinned package through pnpm
         run: |
-          actual_version="$(npx --yes pnpm@11.21.0 dlx @cejel/cejel --version)"
+          client_output="$(npx --yes pnpm@11.21.0 dlx @cejel/cejel --version)"
+          printf '%s\n' "$client_output"
+          actual_version="$(printf '%s\n' "$client_output" | tail -n 1)"
           test "$actual_version" = "$EXPECTED_VERSION"
           echo "Cejel unpinned pnpm consumer runtime version: $actual_version"
 
