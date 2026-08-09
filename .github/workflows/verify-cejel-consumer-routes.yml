@@ -1,0 +1,91 @@
+name: Verify Cejel consumer routes
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/verify-cejel-consumer-routes.yml
+  workflow_dispatch:
+    inputs:
+      expected_version:
+        description: Cejel version every consumer route must execute
+        required: true
+        default: '0.4.0'
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  package-clients:
+    runs-on: ubuntu-24.04
+    env:
+      EXPECTED_VERSION: ${{ inputs.expected_version || '0.4.0' }}
+    steps:
+      - name: Checkout consumer repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+
+      - name: Require the unpinned package through pnpm
+        run: |
+          actual_version="$(npx --yes pnpm@11.21.0 dlx @cejel/cejel --version)"
+          test "$actual_version" = "$EXPECTED_VERSION"
+          echo "Cejel unpinned pnpm consumer runtime version: $actual_version"
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: '1.3.14'
+
+      - name: Require the pinned package through Bun
+        run: |
+          actual_version="$(bunx @cejel/cejel@0.4.0 --version)"
+          test "$actual_version" = "$EXPECTED_VERSION"
+          echo "Cejel pinned Bun consumer runtime version: $actual_version"
+
+  action-routes:
+    runs-on: ubuntu-24.04
+    env:
+      EXPECTED_VERSION: ${{ inputs.expected_version || '0.4.0' }}
+    steps:
+      - name: Checkout consumer repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Run Cejel through the immutable root release tag
+        uses: BargLabs/cejel@v0.4.0
+        with:
+          repo-path: .
+          out-dir: .cejel-action-release-root
+
+      - name: Run Cejel through the floating root main branch
+        uses: BargLabs/cejel@main
+        with:
+          repo-path: .
+          out-dir: .cejel-action-main-root
+
+      # Intentionally floating: this workflow is the external consumer proof required after
+      # moving BargLabs/cejel's sole floating Action major tag.
+      - name: Run Cejel through the consumer-facing v1 tag
+        uses: BargLabs/cejel/action@v1
+        with:
+          repo-path: .
+          out-dir: .cejel-action-v1
+
+      - name: Require every Action route's consumer runtime version
+        run: |
+          for route in release-root main-root v1; do
+            actual_version="$(jq -r '.predicate.tool.version' ".cejel-action-$route/attestation.json")"
+            test "$actual_version" = "$EXPECTED_VERSION"
+            echo "Cejel Action $route consumer runtime version: $actual_version"
+          done
+
+      - name: Upload consumer proof
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: cejel-action-consumer-route-proof
+          path: .cejel-action-*/
+          include-hidden-files: true
+          if-no-files-found: error
