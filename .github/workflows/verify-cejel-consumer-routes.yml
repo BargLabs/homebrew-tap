@@ -19,7 +19,7 @@ jobs:
   package-clients:
     runs-on: ubuntu-24.04
     env:
-      EXPECTED_VERSION: ${{ inputs.expected_version || '0.4.0' }}
+      EXPECTED_VERSION: ${{ inputs.expected_version || '0.4.1' }}
     steps:
       - name: Checkout consumer repository
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -59,13 +59,13 @@ jobs:
   action-routes:
     runs-on: ubuntu-24.04
     env:
-      EXPECTED_VERSION: ${{ inputs.expected_version || '0.4.0' }}
+      EXPECTED_VERSION: ${{ inputs.expected_version || '0.4.1' }}
     steps:
       - name: Checkout consumer repository
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
       - name: Run Cejel through the immutable root release tag
-        uses: BargLabs/cejel@v0.4.0
+        uses: BargLabs/cejel@v0.4.1
         with:
           repo-path: .
           out-dir: .cejel-action-release-root
