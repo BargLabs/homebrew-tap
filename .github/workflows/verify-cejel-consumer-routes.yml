@@ -9,7 +9,7 @@ on:
       expected_version:
         description: Cejel version every consumer route must execute
         required: true
-        default: '0.4.0'
+        default: '0.4.1'
         type: string
 
 permissions:
@@ -39,7 +39,7 @@ jobs:
 
       - name: Require the pinned package through pnpm
         run: |
-          client_output="$(npx --yes pnpm@11.21.0 dlx @cejel/cejel@0.4.0 --version)"
+          client_output="$(npx --yes pnpm@11.21.0 dlx @cejel/cejel@0.4.1 --version)"
           printf '%s\n' "$client_output"
           actual_version="$(printf '%s\n' "$client_output" | tail -n 1)"
           test "$actual_version" = "$EXPECTED_VERSION"
@@ -52,7 +52,7 @@ jobs:
 
       - name: Require the pinned package through Bun
         run: |
-          actual_version="$(bunx @cejel/cejel@0.4.0 --version)"
+          actual_version="$(bunx @cejel/cejel@0.4.1 --version)"
           test "$actual_version" = "$EXPECTED_VERSION"
           echo "Cejel pinned Bun consumer runtime version: $actual_version"
 
