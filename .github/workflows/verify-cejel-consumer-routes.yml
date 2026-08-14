@@ -9,7 +9,7 @@ on:
       expected_version:
         description: Cejel version every consumer route must execute
         required: true
-        default: '0.4.1'
+        default: '0.4.2'
         type: string
 
 permissions:
@@ -19,7 +19,7 @@ jobs:
   package-clients:
     runs-on: ubuntu-24.04
     env:
-      EXPECTED_VERSION: ${{ inputs.expected_version || '0.4.1' }}
+      EXPECTED_VERSION: ${{ inputs.expected_version || '0.4.2' }}
     steps:
       - name: Checkout consumer repository
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -39,7 +39,7 @@ jobs:
 
       - name: Require the pinned package through pnpm
         run: |
-          client_output="$(npx --yes pnpm@11.21.0 dlx @cejel/cejel@0.4.1 --version)"
+          client_output="$(npx --yes pnpm@11.21.0 dlx @cejel/cejel@0.4.2 --version)"
           printf '%s\n' "$client_output"
           actual_version="$(printf '%s\n' "$client_output" | tail -n 1)"
           test "$actual_version" = "$EXPECTED_VERSION"
@@ -52,20 +52,20 @@ jobs:
 
       - name: Require the pinned package through Bun
         run: |
-          actual_version="$(bunx @cejel/cejel@0.4.1 --version)"
+          actual_version="$(bunx @cejel/cejel@0.4.2 --version)"
           test "$actual_version" = "$EXPECTED_VERSION"
           echo "Cejel pinned Bun consumer runtime version: $actual_version"
 
   action-routes:
     runs-on: ubuntu-24.04
     env:
-      EXPECTED_VERSION: ${{ inputs.expected_version || '0.4.1' }}
+      EXPECTED_VERSION: ${{ inputs.expected_version || '0.4.2' }}
     steps:
       - name: Checkout consumer repository
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
       - name: Run Cejel through the immutable root release tag
-        uses: BargLabs/cejel@v0.4.1
+        uses: BargLabs/cejel@v0.4.2
         with:
           repo-path: .
           out-dir: .cejel-action-release-root
