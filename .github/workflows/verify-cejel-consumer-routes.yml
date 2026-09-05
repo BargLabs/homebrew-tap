@@ -39,7 +39,7 @@ jobs:
 
       - name: Require the pinned package through pnpm
         run: |
-          client_output="$(npx --yes pnpm@11.21.0 dlx @cejel/cejel@0.4.5 --version)"
+          client_output="$(npx --yes pnpm@11.21.0 dlx @cejel/cejel@$EXPECTED_VERSION --version)"
           printf '%s\n' "$client_output"
           actual_version="$(printf '%s\n' "$client_output" | tail -n 1)"
           test "$actual_version" = "$EXPECTED_VERSION"
@@ -52,7 +52,7 @@ jobs:
 
       - name: Require the pinned package through Bun
         run: |
-          actual_version="$(bunx @cejel/cejel@0.4.5 --version)"
+          actual_version="$(bunx @cejel/cejel@$EXPECTED_VERSION --version)"
           test "$actual_version" = "$EXPECTED_VERSION"
           echo "Cejel pinned Bun consumer runtime version: $actual_version"
 
@@ -65,7 +65,7 @@ jobs:
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
       - name: Run Cejel through the immutable root release tag
-        uses: BargLabs/cejel@v0.4.5
+        uses: BargLabs/cejel@v0.4.6
         with:
           repo-path: .
           out-dir: .cejel-action-release-root
