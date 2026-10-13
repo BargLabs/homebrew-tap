@@ -5,25 +5,25 @@ class Cejel < Formula
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/BargLabs/cejel/releases/download/v0.6.3/cejel-Darwin-arm64",
+      url "https://github.com/BargLabs/cejel/releases/download/v0.6.4/cejel-Darwin-arm64",
           using: :nounzip
-      sha256 "1dbf3ebf7d22950e24b4fa32678eb6f30641722064afb17e34824789a950ee9f"
+      sha256 "4c06774664df8c42187733e208bd10fbfdff7186c072cba5ef28cf1f61afb688"
     else
-      url "https://github.com/BargLabs/cejel/releases/download/v0.6.3/cejel-Darwin-x86_64",
+      url "https://github.com/BargLabs/cejel/releases/download/v0.6.4/cejel-Darwin-x86_64",
           using: :nounzip
-      sha256 "dbea38105619943deee27840e6390ed9ac1770d713075a26ebf69df0a74ebd8a"
+      sha256 "6143c12a9e0618293a5f5097f1eb6ee814bdc793e2f871ee32750bfed3ba7e16"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
-      url "https://github.com/BargLabs/cejel/releases/download/v0.6.3/cejel-Linux-aarch64",
+      url "https://github.com/BargLabs/cejel/releases/download/v0.6.4/cejel-Linux-aarch64",
           using: :nounzip
-      sha256 "7d7e82ff442c64f607950d99dfda654013a034af6a23de6baa94ad90ba11d0ec"
+      sha256 "917259217b136051473d57a35bf5b73fcab8625bc12a8d5dfb6c90d5dc45ae26"
     else
-      url "https://github.com/BargLabs/cejel/releases/download/v0.6.3/cejel-Linux-x86_64",
+      url "https://github.com/BargLabs/cejel/releases/download/v0.6.4/cejel-Linux-x86_64",
           using: :nounzip
-      sha256 "bfa16c697448715672c7cf21a0032479d8499fd6ecfb8a1a61187a2c357720bb"
+      sha256 "f3a45ac0340c94aeb2a34d52017575758b999a0b46de44264e9d0c9cf200746a"
     end
   end
 
